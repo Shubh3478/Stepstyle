@@ -35,7 +35,7 @@ const forgetPassword = async (req, res) => {
         await user.save();
 
         // Create reset link with token
-        const resetLink = `http://localhost:3000/reset-password.html?token=${token}`;
+        const resetLink = `https://stepstyles.onrender.com/reset-password.html?token=${token}`;
 
         const mailOptions = {
             from: 'mhakalshiv8000@gmail.com',

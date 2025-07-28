@@ -353,7 +353,7 @@
       if (mobile !== originalUser.mobile) updatedUser.mobile = mobile;
       if (profileImage !== originalUser.profileImage) updatedUser.profileImage = profileImage;
 
-      fetch('http://localhost:3000/api/update', {
+      fetch('https://stepstyles.onrender.com/api/update', {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json'
@@ -424,7 +424,7 @@
           newPassword:document.querySelector('#new-password').value,
         };
         try{
-          const res = await fetch("http://localhost:3000/api/changepassword", {
+          const res = await fetch("https://stepstyles.onrender.com/api/changepassword", {
             method:"PUT",
             headers:{
               "Content-Type":"application/json"
@@ -472,7 +472,7 @@ function hideDeleteForm() {
   const user = JSON.parse(localStorage.getItem('user'));
 
   try {
-    const res = await fetch('http://localhost:3000/api/delete', {
+    const res = await fetch('https://stepstyles.onrender.com/api/delete', {
       method: 'DELETE',
       headers: {
         'Content-Type': 'application/json'
