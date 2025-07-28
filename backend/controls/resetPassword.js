@@ -18,9 +18,9 @@ const resetPassword = async (req, res) => {
             });
         }
 
-        User.password = await bcrypt.hash(password, 10);
-        User.resetToken = undefined;
-        User.tokenExpiration = undefined;
+        user.password = await bcrypt.hash(password, 10);
+        user.resetToken = undefined;
+        user.tokenExpiration = undefined;
         await user.save();
 
         return res.status(200).json({
