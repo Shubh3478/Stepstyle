@@ -1,0 +1,501 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Dashboard</title>
+  <style>
+    :root {
+      --black: #1d1d1d;
+      --orange: #ff6600;
+      --gray: #555;
+      --light-gray: #f0f0f0;
+      --border-color: #ccc;
+      --font-main: 'Nunito', sans-serif;
+      --error-color: #e74c3c;
+      --success-color: #2ecc71;
+    }
+
+    * {
+      font-family: var(--font-main);
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      outline: none;
+      border: none;
+      text-decoration: none;
+      text-transform: capitalize;
+      transition: all 0.2s linear;
+    }
+
+    html {
+      font-size: 62.5%;
+      overflow-x: hidden;
+      scroll-padding-top: 6rem;
+      scroll-behavior: smooth;
+    }
+
+    body {
+      background-color: #f4f4f4;
+    }
+
+    /* ===== Header ===== */
+    header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 1000;
+      background: #fff;
+      padding: 2rem 9%;
+      box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.1);
+    }
+
+    header .logo {
+      font-size: 2.5rem;
+      color: var(--black);
+      font-weight: bold;
+    }
+
+    header .navbar a {
+      font-size: 1.7rem;
+      color: var(--black);
+      margin: 0 1rem;
+    }
+
+    header .navbar a:hover {
+      color: var(--orange);
+    }
+
+    header .icons a {
+      font-size: 2.5rem;
+      color: var(--black);
+      margin-left: 1.5rem;
+    }
+
+    header .icons a:hover {
+      color: var(--orange);
+    }
+
+    /* ===== Main Section ===== */
+    main {
+      padding: 12rem 4rem 4rem; /* Added top padding to avoid overlap with fixed header */
+      text-align: center;
+    }
+
+    h1 {
+      color: var(--black);
+      font-size: 3rem;
+      margin-bottom: 3rem;
+    }
+
+    /* ===== Profile Section ===== */
+    .profile-section {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 4rem;
+      flex-wrap: wrap;
+    }
+
+    .image-section {
+      text-align: center;
+    }
+    
+    #profile {
+      margin-top: 40px;
+    }
+
+    #profile-pic {
+      width: 120px;
+      height: 120px;
+      border-radius: 50%;
+      object-fit: cover;
+      margin-top: 1rem;
+      border: 2px solid var(--border-color);
+    }
+
+    .info {
+      margin-top: 2rem;
+      font-size: 1.8rem;
+      color: var(--gray);
+      text-align: left;
+      min-width: 250px;
+    }
+
+    .info div {
+      margin-bottom: 1.5rem;
+    }
+
+    .info input:disabled,
+    .edit-btn:disabled {
+      cursor: not-allowed;
+      opacity: 0.6;
+    }
+
+
+    .info input {
+      padding: 0.8rem;
+      font-size: 1.6rem;
+      border: 1px solid var(--border-color);
+      border-radius: 5px;
+      width: 100%;
+    }
+
+    .info input:disabled {
+      background-color: var(--light-gray);
+      width: 350px;
+    }
+
+    .info input:enabled {
+      width: 350px;
+    }
+
+    /* ===== Password Change Section ===== */
+    .password-change {
+      display: none;
+      margin-top: 2rem;
+      padding: 2rem;
+      background: #fff;
+      border-radius: 5px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      max-width: 400px;
+      margin: 2rem auto;
+    }
+
+    .password-change h3 {
+      font-size: 2rem;
+      color: var(--black);
+      margin-bottom: 1.5rem;
+    }
+
+    .password-change input {
+      width: 100%;
+      padding: 1rem;
+      margin-bottom: 1.5rem;
+      font-size: 1.6rem;
+      border: 1px solid var(--border-color);
+      border-radius: 5px;
+    }
+
+    .password-change .btn-group {
+      display: flex;
+      justify-content: space-between;
+      gap: 1rem;
+    }
+
+    /* ===== Buttons ===== */
+    .edit-btn,
+    .save-btn,
+    .logout-btn,
+    .change-password-btn,
+    .submit-password-btn,
+    .cancel-password-btn {
+      padding: 1rem 2rem;
+      background-color: var(--black);
+      color: white;
+      border: none;
+      border-radius: 5px;
+      font-size: 1.6rem;
+      cursor: pointer;
+      margin-top: 1rem;
+    }
+
+    .edit-btn:hover,
+    .save-btn:hover,
+    .logout-btn:hover,
+    .change-password-btn:hover,
+    .submit-password-btn:hover,
+    .cancel-password-btn:hover {
+      background-color: var(--orange);
+      color: white;
+    }
+
+    .cancel-password-btn {
+      background-color: var(--gray);
+    }
+
+    .message {
+      font-size: 1.6rem;
+      margin: 1rem 0;
+      padding: 1rem;
+      border-radius: 5px;
+      display: none;
+    }
+
+    .error {
+      background-color: #fdecea;
+      color: var(--error-color);
+      border: 1px solid var(--error-color);
+      display: block;
+    }
+
+    .success {
+      background-color: #e8f5e9;
+      color: var(--success-color);
+      border: 1px solid var(--success-color);
+      display: block;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <nav class="navbar">
+      <a href="dashboard.html" class="logo">Dashboard</a>
+      <a href="index.html">home</a>
+    </nav>
+  </header>
+  
+  <main>
+    <h1 id="greeting">Hello, User!</h1>
+
+    <div class="profile-section">
+      <!-- Profile Picture Section -->
+      <div class="image-section">
+        <strong>Profile Picture:</strong><br />
+        <img id="profile-pic" src="" alt="Profile Picture" />
+        <br />
+        <input type="file" id="imageUpload" accept="image/*" style="display: none;" onchange="handleImageUpload(event)" />
+        <button id="profile" class="edit-btn" onclick="document.getElementById('imageUpload').click()" disabled>
+          Change Profile Picture
+        </button>        
+      </div>
+
+      <!-- Info Section -->
+      <div class="info">
+        <div>
+          <strong>Name:</strong>
+          <input type="text" id="name" disabled />
+        </div>
+        <div>
+          <strong>Email:</strong>
+          <input type="email" id="email" disabled />
+        </div>
+        <div>
+          <strong>Mobile:</strong>
+          <input type="text" id="mobile" disabled />
+        </div>
+        <button id="edit-btn" class="edit-btn" onclick="toggleEdit()">Edit</button>
+        <button id="save-btn" class="save-btn" onclick="saveProfile()" style="display: none;">Save</button>
+        <button id="change-password-btn" class="change-password-btn" onclick="showPasswordChange()">Change Password</button>
+        <button class="logout-btn" onclick="logout()">Logout</button>
+        <button class="logout-btn" style="background-color: var(--error-color);" onclick="showDeleteForm()">Delete Account</button>
+        <!-- <button class="logout-btn" style="background-color: var(--error-color);" onclick="deleteAccount()">Delete Account</button> -->
+      </div>
+    </div>
+
+    <!-- Password Change Section -->
+    <form id="password-change" class="password-change">
+      <h3>Change Password</h3>
+      <div id="password-message" class="message"></div>
+      <input type="password" id="current-password" placeholder="Current Password" required>
+      <input type="password" id="new-password" placeholder="New Password" required>
+      <input type="password" id="confirm-password" placeholder="Confirm New Password" required>
+      <div class="btn-group">
+        <button type="submit" class="submit-password-btn">Submit</button>
+        <button class="cancel-password-btn" onclick="hidePasswordChange()">Cancel</button>
+      </div>
+    </form>
+    <!-- Delete Account form -->
+    <form id="delete-account-form" class="password-change" style="display: none;">
+  <h3>Confirm Account Deletion</h3>
+  <div id="delete-message" class="message"></div>
+  <input type="password" id="delete-password" placeholder="Enter your password" required>
+  <div class="btn-group">
+    <button type="submit" class="submit-password-btn">Delete</button>
+    <button type="button" class="cancel-password-btn" onclick="hideDeleteForm()">Cancel</button>
+  </div>
+</form>
+
+  </main>
+
+  <script>
+    let originalUser = null;
+
+    function loadUser() {
+      const user = JSON.parse(localStorage.getItem('user'));
+      if (user) {
+        originalUser = user; // keep a copy for comparison
+        document.getElementById('greeting').textContent = `Hello, ${user.name}!`;
+        document.getElementById('name').value = user.name;
+        document.getElementById('email').value = user.email;
+        document.getElementById('mobile').value = user.mobile;
+        document.getElementById('profile-pic').src = user.profileImage || '';
+      } else {
+        window.location.href = "login.html";
+      }
+    }
+
+    function logout() {
+      localStorage.removeItem('user');
+      window.location.href = "index.html";
+    }
+
+    function toggleEdit() {
+      document.getElementById('name').disabled = false;
+      document.querySelector('.edit-btn').disabled = false;
+      document.getElementById('mobile').disabled = false;
+      document.getElementById('change-password-btn').disabled = false;
+      document.getElementById('edit-btn').style.display = 'none';
+      document.getElementById('save-btn').style.display = 'inline-block';
+    }
+
+    function saveProfile() {
+      const user = JSON.parse(localStorage.getItem('user'));
+      const email = user.email;
+      const name = document.getElementById('name').value;
+      const mobile = document.getElementById('mobile').value;
+      const profileImage = document.getElementById('profile-pic').src;
+
+      // Build only changed fields to send
+      const updatedUser = { email };
+      if (name !== originalUser.name) updatedUser.name = name;
+      if (mobile !== originalUser.mobile) updatedUser.mobile = mobile;
+      if (profileImage !== originalUser.profileImage) updatedUser.profileImage = profileImage;
+
+      fetch('http://localhost:3000/api/update', {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(updatedUser)
+      })
+      .then(res => res.json())
+      .then(data => {
+        if (data.success) {
+          user.name = name;
+          user.mobile = mobile;
+          user.profileImage = profileImage;
+          localStorage.setItem('user', JSON.stringify(user));
+          originalUser = user;
+
+          document.getElementById('name').disabled = true;
+          document.getElementById('mobile').disabled = true;
+          document.getElementById('profile').disabled = true;
+          document.getElementById('edit-btn').style.display = 'inline-block';
+          document.getElementById('save-btn').style.display = 'none';
+          alert("Profile Updated Successfully")
+        } else {
+          showMessage('Error: ' + data.message, 'error');
+        }
+      })
+      .catch(err => {
+        console.error(err);
+        showMessage('Error updating profile.', 'error');
+      });
+    }
+
+    function handleImageUpload(event) {
+      const file = event.target.files[0];
+      if (file && file.type.startsWith("image/")) {
+        const reader = new FileReader();
+        reader.onload = function (e) {
+          document.getElementById("profile-pic").src = e.target.result;
+        };
+        reader.readAsDataURL(file);
+      } else {
+        showMessage("Please select a valid image file.", "error");
+      }
+    }
+
+    function showPasswordChange() {
+      document.getElementById('password-change').style.display = 'block';
+      document.getElementById('current-password').focus();
+    }
+
+    function hidePasswordChange() {
+      document.getElementById('password-change').style.display = 'none';
+      document.getElementById('current-password').value = '';
+      document.getElementById('new-password').value = '';
+      document.getElementById('confirm-password').value = '';
+    } 
+      document.querySelector('#password-change').addEventListener('submit', async (e)=>{
+
+        e.preventDefault();
+        const confirmPassword = document.querySelector('#confirm-password').value
+      const nPassword = document.querySelector('#new-password').value
+      if(confirmPassword !== nPassword){
+        return alert('Passwords do not match')
+      }
+        const user = JSON.parse(localStorage.getItem('user'));
+        const data = {
+          email : user.email,
+          oldPassword:document.querySelector('#current-password').value,
+          newPassword:document.querySelector('#new-password').value,
+        };
+        try{
+          const res = await fetch("http://localhost:3000/api/changepassword", {
+            method:"PUT",
+            headers:{
+              "Content-Type":"application/json"
+            },
+            body:JSON.stringify(data)
+          });
+          const result = await res.json();
+          if(res.ok){
+            alert(result.message)
+            document.getElementById('password-change').style.display = 'none';
+            document.getElementById('current-password').value = '';
+            document.getElementById('new-password').value = '';
+            document.getElementById('confirm-password').value = '';
+            return;
+          }
+          else {
+            alert(result.message || "Something went wrong")
+            return;
+          }
+          
+        }
+        catch(err){
+          console.error("Error", err);
+          alert("Failed to connect to the server")
+        }
+         })
+    // Load user data when page loads
+    loadUser();
+    // Delete Account Button
+  function showDeleteForm() {
+  document.getElementById('delete-account-form').style.display = 'block';
+  document.getElementById('delete-password').focus();
+}
+
+function hideDeleteForm() {
+  document.getElementById('delete-account-form').style.display = 'none';
+  document.getElementById('delete-password').value = '';
+  hideDeleteMessage();
+}
+
+
+  document.getElementById('delete-account-form').addEventListener('submit', async function (e) {
+  e.preventDefault();
+  const password = document.getElementById('delete-password').value;
+  const user = JSON.parse(localStorage.getItem('user'));
+
+  try {
+    const res = await fetch('http://localhost:3000/api/delete', {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        email: user.email,
+        password: password
+      })
+    });
+
+    const result = await res.json();
+    if (res.ok) {
+      alert(result.message || "Account deleted successfully.");
+      localStorage.removeItem('user');
+      window.location.href = "index.html";
+    } else {
+      showDeleteMessage(result.message || "Incorrect password.", 'error');
+    }
+  } catch (error) {
+    console.error("Delete error:", error);
+    showDeleteMessage("Something went wrong. Please try again.", 'error');
+  }
+});
+  </script>
+</body>
+</html>

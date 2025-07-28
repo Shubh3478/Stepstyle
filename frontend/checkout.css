@@ -1,0 +1,111 @@
+
+    body {
+      font-family: 'Arial', sans-serif;
+      line-height: 1.6;
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 20px;
+      color: #333;
+    }
+    :root{
+      --black:#2c2c54;
+      --orange:#ff9f1a;
+    }
+    h1, h2 {
+      color: #2c3e50;
+      margin-bottom: 20px;
+    }
+
+    form {
+      background: #f9f9f9;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    label {
+      display: block;
+      margin: 15px 0 5px;
+      font-weight: bold;
+    }
+
+    input[type="text"],
+    input[type="email"],
+    input[type="tel"],
+    textarea {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      box-sizing: border-box;
+    }
+
+    textarea {
+      height: 80px;
+      resize: vertical;
+    }
+
+    input[type="radio"] {
+      margin-right: 10px;
+    }
+
+    .radio-label {
+      display: inline;
+      font-weight: normal;
+      margin-right: 20px;
+    }
+
+    button {
+      background: black;
+      color: white;
+      border: none;
+      padding: 12px 20px;
+      margin-top: 20px;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 16px;
+      transition: background 0.3s;
+    }
+
+    .btn:hover{
+      background:var(--orange);
+      color:#fff;
+    }
+
+    /* Payment option containers */
+    .payment-option {
+      display: none;
+      margin-top: 20px;
+      padding: 20px;
+      background: #fff;
+      border-radius: 4px;
+      border: 1px solid #ddd;
+    }
+
+    .payment-option.active {
+      display: block;
+    }
+
+    .card-details input {
+      margin-bottom: 15px;
+    }
+
+    .upi-qr {
+      text-align: center;
+    }
+
+    .upi-qr img {
+      max-width: 200px;
+      height: auto;
+      margin: 20px 0;
+    }
+
+    .card-row {
+      display: flex;
+      gap: 15px;
+    }
+
+    .card-row div {
+      flex: 1;
+    }
+  

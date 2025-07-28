@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login Page</title>
+  <style>
+body {
+    padding-top: 100px;
+    margin: 0;
+    font-family: 'Lato', sans-serif;
+    background-color: white;
+}
+:root {
+    --orange: #FFA500; /* Or any orange shade you like */
+}
+.form-page {
+    max-width: 400px;
+    margin: auto;
+    padding: 20px;
+    background-color: rgb(241, 241, 241);
+    border-radius: 10px;
+    box-shadow: 0 1px 2px 0 rgba(60, 64, 67, 0.302), 0 2px 6px 2px rgba(60, 64, 67, 0.149);
+    text-align: center;
+}
+
+h2 {
+    font-size: 30px;
+    color: rgb(29, 29, 29);
+    margin-bottom: 20px;
+}
+
+label {
+    font-weight: bold;
+    color: rgb(29, 29, 29);
+    display: block;
+    margin-bottom: 5px;
+}
+
+input {
+    width: 100%;
+    padding: 10px;
+    margin: 10px 0;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    color: rgb(29, 29, 29);
+    box-sizing: border-box;
+}
+
+input:focus {
+    outline: none;
+    background-color: rgb(220, 220, 220);
+}
+
+
+button {
+    width: 100%;
+    padding: 12px;
+    background-color: rgb(29, 29, 29);
+    color: white;
+    font-weight: bold;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+button:hover {
+    /* background-color: rgb(220, 220, 220); */
+    background: var(--orange);
+    color: rgb(29, 29, 29);
+}
+
+.form-links {
+    margin-top: 20px;
+}
+
+.form-links a {
+    color: rgb(29, 29, 29);
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: bold;
+}
+
+.form-links a:hover {
+    text-decoration: underline;
+}
+
+/* Responsive design */
+@media(max-width: 600px) {
+    .form-page {
+        width: 90%;
+        padding: 15px;
+    }
+
+    h2 {
+        font-size: 24px;
+    }
+
+    input {
+        font-size: 14px;
+    }
+
+    button {
+        font-size: 14px;
+    }
+}
+
+  </style>
+</head>
+<body>
+  <main class="form-page">
+    <h2>Login</h2>
+    <form id="form">
+      <label for="email">Email:</label>
+      <input type="text" id="email" name="email" required>
+
+      <label for="password">Password:</label>
+      <input type="password" id="password" name="password" required>
+
+      <button type="submit">Login</button>
+    </form>
+    <div class="form-links">
+      <a href="forgot-password.html">Forgot Password?</a>
+      <a href="signup.html">Sign Up</a>
+    </div>
+  </main>
+  <script>
+    document.querySelector('#form').addEventListener('submit' ,async (e)=>{
+        e.preventDefault();
+        const data = {
+            email:document.querySelector('#email').value,
+            password:document.querySelector('#password').value
+        };
+        try{
+            const res = await fetch("http://localhost:3000/api/login", {
+                method:"POST",
+                headers:{
+                    "Content-Type":"application/json"
+                },
+                body:JSON.stringify(data)
+            });
+            const result = await res.json();
+            // console.log(result)
+            if (res.ok && result.success) {
+    // Save user info to localStorage
+    localStorage.setItem('user', JSON.stringify(result.user));
+    window.location.href = "index.html";
+} else {
+    alert(result.message || 'User does not exist');
+}
+        }
+
+        catch(err){
+            console.error(err.message)
+            alert("Enter a vaild email or password")
+        }
+    })
+  </script>
+</body>
+</html>
