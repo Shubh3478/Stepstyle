@@ -3,6 +3,7 @@ const User = require('../models/userdata')
 
 const resetPassword = async (req, res) => {
     try {
+        console.log(req.body)
         const { token, password } = req.body;
 
         const user = await User.findOne({

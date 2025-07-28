@@ -2,7 +2,6 @@ const User = require('../models/userdata');
 
 const updateProfile = async (req, res) => {
   try {
-    // console.log(req.body)
     const { email, name, mobile, profileImage } = req.body;
 
     if (!email) {
