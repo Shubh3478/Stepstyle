@@ -38,7 +38,7 @@ const forgetPassword = async (req, res) => {
         const resetLink = `https://stepstyles.onrender.com/reset-password.html?token=${token}`;
 
         const mailOptions = {
-            from: 'mhakalshiv8000@gmail.com',
+            from: '"Stepstyle "<mhakalshiv8000@gmail.com>',
             to: email,
             subject: "Password Reset Request",
             html: `
