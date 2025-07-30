@@ -50,7 +50,6 @@
      input:focus, textarea:focus, select:focus {
         outline: none;
         background-color: rgb(220, 220, 220);
-        border-color: rgb(29, 29, 29);
      }
      button {
         width: 100%;
@@ -94,9 +93,9 @@
 <body>
    <div class="container">
      <h1>Contact Us</h1>
-     <form action="https://api.web3forms.com/submit" method="POST">
-      <input type="hidden" name="access_key" value="53ac9a97-64c5-4e9b-a67a-a32d85bde124">
-       
+     <form id="contact-form">
+       <input type="hidden" name="access_key" value="53ac9a97-64c5-4e9b-a67a-a32d85bde124">
+
        <div>
          <label for="name">Your Name</label>
          <input type="text" id="name" name="name" placeholder="Enter your name" required>
@@ -152,18 +151,15 @@
          other_query: document.getElementById('other_query')
        };
 
-       // Hide all fields
        document.getElementById('product-field').style.display = 'none';
        document.getElementById('order-field').style.display = 'none';
        document.getElementById('feedback-field').style.display = 'none';
        document.getElementById('other-query-field').style.display = 'none';
 
-       // Disable all fields
        for (let key in fields) {
          fields[key].disabled = true;
        }
 
-       // Show and enable the selected field
        if (queryValue === 'product_issue') {
          document.getElementById('product-field').style.display = 'block';
          fields.product_issue.disabled = false;
@@ -180,6 +176,32 @@
      }
 
      window.onload = toggleQueryFields;
+
+     // Handle form submission via JavaScript
+     document.getElementById('contact-form').addEventListener('submit', function (e) {
+       e.preventDefault();
+
+       const form = e.target;
+       const formData = new FormData(form);
+
+       fetch("https://api.web3forms.com/submit", {
+         method: "POST",
+         body: formData
+       })
+       .then(response => response.json())
+       .then(result => {
+         if (result.success) {
+           alert("Thank you! Your message has been sent.");
+           window.location.href = "https://stepstyles.onrender.com/";
+         } else {
+           alert("There was an error submitting the form. Please try again.");
+         }
+       })
+       .catch(error => {
+         console.error(error);
+         alert("Network error. Please try again.");
+       });
+     });
    </script>
 </body>
 </html>
